@@ -46,7 +46,7 @@ final class DeleteCommentFormFactory implements DeleteCommentFormFactoryInterfac
      */
     public function createForm(): FormInterface
     {
-        $builder = $this->formFactory->createNamedBuilder($this->name, $this->type, null, ['csrf_protection' => true]);
+        $builder = $this->formFactory->createNamedBuilder($this->name, $this->type, null, ['method' => 'POST']);
 
         return $builder->getForm();
     }

@@ -309,15 +309,11 @@ class ThreadController extends AbstractFOSRestController
             throw new NotFoundHttpException(sprintf("No comment with id '%s' found for thread with id '%s'", $commentId, $id));
         }
 
-        $form = $this->getDeleteCommentFormFactory()->createForm();
+        $form = $this->getDeleteCommentFormFactory()->createForm(null, ['method' => 'POST']);
         $form->setData($comment);
         $form->handleRequest($request);
 
-        if (!$form->isSubmitted()) {
-            $form->submit([]);
-        }
-
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isValid()) {
             if (false !== $manager->saveComment($comment)) {
                 $response = $this->getViewHandler()->handle($this->onRemoveThreadCommentSuccess($form, $id));
                 return $this->createRedirect($response);
@@ -628,7 +624,7 @@ class ThreadController extends AbstractFOSRestController
             ->setStatusCode(Response::HTTP_BAD_REQUEST)
             ->setData([
                     'data' => [
-                        'form' => $form,
+                        'form' => $form->createView(),
                         'id' => $id,
                         'parent' => $parent,
                     ],
@@ -658,7 +654,7 @@ class ThreadController extends AbstractFOSRestController
             ->setStatusCode(Response::HTTP_BAD_REQUEST)
             ->setData([
                     'data' => [
-                        'form' => $form,
+                        'form' => $form->createView(),
                     ],
                     'template' => '@FOSComment/Thread/new.html.twig',
                 ]
@@ -699,7 +695,7 @@ class ThreadController extends AbstractFOSRestController
                     'data' => [
                         'id' => $id,
                         'commentId' => $commentId,
-                        'form' => $form,
+                        'form' => $form->createView(),
                     ],
                     'template' => '@FOSComment/Thread/vote_new.html.twig',
                 ]
