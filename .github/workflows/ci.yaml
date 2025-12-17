@@ -13,7 +13,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: 8.2
           extensions: json, mbstring
           tools: composer, php-cs-fixer:2.19
 
@@ -33,15 +33,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - php: '7.4'
-            dependencies: 'lowest'
-            symfony_require: '4.4.*'
-          - php: '7.4'
+          - php: '8.2'
             dependencies: 'highest'
-            symfony_require: '5.4.*'
-          - php: '8.0'
-            dependencies: 'highest'
-            symfony_require: '5.4.*'
+            symfony_require: '6.4.*'
       fail-fast: false
     steps:
       - name: Checkout
