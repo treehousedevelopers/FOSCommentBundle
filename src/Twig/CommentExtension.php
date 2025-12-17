@@ -33,7 +33,7 @@ final class CommentExtension extends AbstractExtension
     private $voteAcl;
     private $threadAcl;
 
-    public function __construct(CommentAclInterface $commentAcl = null, VoteAclInterface $voteAcl = null, ThreadAclInterface $threadAcl = null)
+    public function __construct(?CommentAclInterface $commentAcl = null, ?VoteAclInterface $voteAcl = null, ?ThreadAclInterface $threadAcl = null)
     {
         $this->commentAcl = $commentAcl;
         $this->voteAcl = $voteAcl;
@@ -84,7 +84,7 @@ final class CommentExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('fos_comment_can_comment', [$this, 'canComment']),
@@ -104,7 +104,7 @@ final class CommentExtension extends AbstractExtension
      * @param  CommentInterface|null $comment
      * @return bool                  If the user is able to comment
      */
-    public function canComment(CommentInterface $comment = null)
+    public function canComment(?CommentInterface $comment = null)
     {
         if (null !== $comment
             && null !== $comment->getThread()

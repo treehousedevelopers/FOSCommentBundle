@@ -110,7 +110,7 @@ class RoleCommentAcl implements CommentAclInterface
      *
      * @return bool
      */
-    public function canReply(CommentInterface $parent = null)
+    public function canReply(?CommentInterface $parent = null)
     {
         if (null !== $parent) {
             return $this->canCreate() && $this->canView($parent);

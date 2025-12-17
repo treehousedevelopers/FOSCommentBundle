@@ -52,7 +52,7 @@ class FOSRestViewHandlerAdapter implements ViewHandlerInterface
         $this->decorated->registerHandler($format, $callable);
     }
 
-    public function handle(View $view, Request $request = null): Response
+    public function handle(View $view, ?Request $request = null): Response
     {
         $data = $view->getData();
 

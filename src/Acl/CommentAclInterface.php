@@ -41,7 +41,7 @@ interface CommentAclInterface
      *
      * @return bool
      */
-    public function canReply(CommentInterface $parent = null);
+    public function canReply(?CommentInterface $parent = null);
 
     /**
      * Checks if the user should be able to edit a comment.
