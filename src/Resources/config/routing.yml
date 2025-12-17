@@ -7,6 +7,6 @@
 # with this source code in the file LICENSE.
 #
 fos_comment_thread_api:
-    type: annotation
+    type: attribute
     resource: FOS\CommentBundle\Controller\ThreadController
     name_prefix: fos_comment_
