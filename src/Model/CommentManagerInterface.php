@@ -100,7 +100,7 @@ interface CommentManagerInterface
      *
      * @return CommentInterface The created comment
      */
-    public function createComment(ThreadInterface $thread, CommentInterface $parent = null);
+    public function createComment(ThreadInterface $thread, ?CommentInterface $parent = null);
 
     /**
      * Checks if the comment was already persisted before, or if it's a new one.

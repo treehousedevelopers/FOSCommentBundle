@@ -46,7 +46,7 @@ abstract class Vote implements VoteInterface
     /**
      * @param VotableCommentInterface $comment
      */
-    public function __construct(VotableCommentInterface $comment = null)
+    public function __construct(?VotableCommentInterface $comment = null)
     {
         $this->comment = $comment;
         $this->createdAt = new DateTime();

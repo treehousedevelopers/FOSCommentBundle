@@ -30,6 +30,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -44,9 +45,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Presents the form to use to create a new Thread.
-     *
-     * @Rest\Get("/threads/new", name="new_threads")
      */
+    #[Route('/threads/new', name: 'new_threads', methods: ['GET'])]
     public function newThreadsAction(): Response
     {
         $form = $this->getThreadFormFactory()->createForm();
@@ -65,9 +65,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Gets the thread for a given id.
-     *
-     * @Rest\Get("/threads/{id}", name="get_thread")
      */
+    #[Route('/threads/{id}', name: 'get_thread', methods: ['GET'])]
     public function getThreadAction(string $id): Response
     {
         $manager = $this->getThreadManager();
@@ -85,9 +84,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Gets the threads for the specified ids.
-     *
-     * @Rest\Get("/threads", name="get_threads")
      */
+    #[Route('/threads', name: 'get_threads', methods: ['GET'])]
     public function getThreadsActions(Request $request): Response
     {
         $ids = $request->query->get('ids');
@@ -106,9 +104,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Creates a new Thread from the submitted data.
-     *
-     * @Rest\Post("/threads", name="post_threads")
      */
+    #[Route('/threads', name: 'post_threads', methods: ['POST'])]
     public function postThreadsAction(Request $request): Response
     {
         $threadManager = $this->getThreadManager();
@@ -133,9 +130,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Get the edit form the open/close a thread.
-     *
-     * @Rest\Get("/threads/{id}/commentable", name="edit_thread_commentable")
      */
+    #[Route('/threads/{id}/commentable', name: 'edit_thread_commentable', methods: ['GET'])]
     public function editThreadCommentableAction(Request $request, string $id): Response
     {
         $manager = $this->getThreadManager();
@@ -166,9 +162,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Edits the thread.
-     *
-     * @Rest\Patch("/threads/{id}/commentable", name="patch_thread_commentable")
      */
+    #[Route('/threads/{id}/commentable', name: 'patch_thread_commentable', methods: ['PATCH'])]
     public function patchThreadCommentableAction(Request $request, string $id): Response
     {
         $manager = $this->getThreadManager();
@@ -193,9 +188,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Presents the form to use to create a new Comment for a Thread.
-     *
-     * @Rest\Get("/threads/{id}/comments/new", name="new_thread_comments")
      */
+    #[Route('/threads/{id}/comments/new', name: 'new_thread_comments', methods: ['GET'])]
     public function newThreadCommentsAction(Request $request, string $id): Response
     {
         $thread = $this->getThreadManager()->findThreadById($id);
@@ -228,9 +222,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Get a comment of a thread.
-     *
-     * @Rest\Get("/threads/{id}/comments/{commentId}", name="get_thread_comment")
      */
+    #[Route('/threads/{id}/comments/{commentId}', name: 'get_thread_comment', methods: ['GET'])]
     public function getThreadCommentAction(string $id, string $commentId): Response
     {
         $thread = $this->getThreadManager()->findThreadById($id);
@@ -263,9 +256,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Get the delete form for a comment.
-     *
-     * @Rest\Get("/threads/{id}/comments/{commentId}/remove", name="remove_thread_comment")
      */
+    #[Route('/threads/{id}/comments/{commentId}/remove', name: 'remove_thread_comment', methods: ['GET'])]
     public function removeThreadCommentAction(Request $request, string $id, string $commentId): Response
     {
         $thread = $this->getThreadManager()->findThreadById($id);
@@ -296,9 +288,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Edits the comment state.
-     *
-     * @Rest\Post("/threads/{id}/comments/{commentId}/state", name="patch_thread_comment_state")
      */
+    #[Route('/threads/{id}/comments/{commentId}/state', name: 'patch_thread_comment_state', methods: ['POST'])]
     public function patchThreadCommentStateAction(Request $request, string $id, string $commentId): Response
     {
         $manager = $this->getCommentManager();
@@ -325,9 +316,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Presents the form to use to edit a Comment for a Thread.
-     *
-     * @Rest\Get("/threads/{id}/comments/{commentId}/edit", name="edit_thread_comment")
      */
+    #[Route('/threads/{id}/comments/{commentId}/edit', name: 'edit_thread_comment', methods: ['GET'])]
     public function editThreadCommentAction(string $id, string $commentId): Response
     {
         $thread = $this->getThreadManager()->findThreadById($id);
@@ -355,9 +345,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Edits a given comment.
-     *
-     * @Rest\Post("/threads/{id}/comments/{commentId}/edit", name="post_edit_thread_comments")
      */
+    #[Route('/threads/{id}/comments/{commentId}/edit', name: 'post_edit_thread_comments', methods: ['POST'])]
     public function postEditThreadCommentAction(Request $request, string $id, string $commentId): Response
     {
         $commentManager = $this->getCommentManager();
@@ -390,10 +379,9 @@ class ThreadController extends AbstractFOSRestController
     /**
      * Get the comments of a thread. Creates a new thread if none exists.
      *
-     * @Rest\Get("/threads/{id}/comments", name="get_thread_comments")
-     *
      * @todo Add support page/pagesize/sorting/tree-depth parameters
      */
+    #[Route('/threads/{id}/comments', name: 'get_thread_comments', methods: ['GET'])]
     public function getThreadCommentsAction(Request $request, ValidatorInterface $validator, string $id): Response
     {
         $displayDepth = $request->query->get('displayDepth');
@@ -482,9 +470,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Creates a new Comment for the Thread from the submitted data.
-     *
-     * @Rest\Post("/threads/{id}/comments", name="post_thread_comments")
      */
+    #[Route('/threads/{id}/comments', name: 'post_thread_comments', methods: ['POST'])]
     public function postThreadCommentsAction(Request $request, string $id): Response
     {
         $thread = $this->getThreadManager()->findThreadById($id);
@@ -516,9 +503,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Get the votes of a comment.
-     *
-     * @Rest\Get("/threads/{id}/comments/{commentId}/votes", name="get_thread_comment_votes")
      */
+    #[Route('/threads/{id}/comments/{commentId}/votes', name: 'get_thread_comment_votes', methods: ['GET'])]
     public function getThreadCommentVotesAction(string $id, mixed $commentId): Response
     {
         $thread = $this->getThreadManager()->findThreadById($id);
@@ -542,9 +528,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Presents the form to use to create a new Vote for a Comment.
-     *
-     * @Rest\Get("/threads/{id}/comments/{commentId}/votes/new", name="new_thread_comment_votes")
      */
+    #[Route('/threads/{id}/comments/{commentId}/votes/new', name: 'new_thread_comment_votes', methods: ['GET'])]
     public function newThreadCommentVotesAction(Request $request, string $id, string $commentId): Response
     {
         $thread = $this->getThreadManager()->findThreadById($id);
@@ -576,9 +561,8 @@ class ThreadController extends AbstractFOSRestController
 
     /**
      * Creates a new Vote for the Comment from the submitted data.
-     *
-     * @Rest\Post("/threads/{id}/comments/{commentId}/votes", name="post_thread_comment_votes")
      */
+    #[Route('/threads/{id}/comments/{commentId}/votes', name: 'post_thread_comment_votes', methods: ['POST'])]
     public function postThreadCommentVotesAction(Request $request, $id, $commentId): Response
     {
         $thread = $this->getThreadManager()->findThreadById($id);
@@ -607,7 +591,7 @@ class ThreadController extends AbstractFOSRestController
     /**
      * Forwards the action to the comment view on a successful form submission.
      */
-    protected function onCreateCommentSuccess(FormInterface $form, string $id, CommentInterface $parent = null): View
+    protected function onCreateCommentSuccess(FormInterface $form, string $id, ?CommentInterface $parent = null): View
     {
         return View::createRouteRedirect('fos_comment_get_thread_comment', [
             'id' => $id,
@@ -618,7 +602,7 @@ class ThreadController extends AbstractFOSRestController
     /**
      * Returns HTTP_BAD_REQUEST response when the form submission fails.
      */
-    protected function onCreateCommentError(FormInterface $form, string $id, CommentInterface $parent = null): View
+    protected function onCreateCommentError(FormInterface $form, string $id, ?CommentInterface $parent = null): View
     {
         $view = View::create()
             ->setStatusCode(Response::HTTP_BAD_REQUEST)

@@ -45,7 +45,7 @@ class CommentBlamerListener implements EventSubscriberInterface
      *
      * @param LoggerInterface $logger
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, LoggerInterface $logger = null)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage, ?LoggerInterface $logger = null)
     {
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;

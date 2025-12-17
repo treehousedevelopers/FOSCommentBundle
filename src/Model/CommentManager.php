@@ -53,7 +53,7 @@ abstract class CommentManager implements CommentManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function createComment(ThreadInterface $thread, CommentInterface $parent = null)
+    public function createComment(ThreadInterface $thread, ?CommentInterface $parent = null)
     {
         $class = $this->getClass();
         $comment = new $class();
