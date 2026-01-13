@@ -809,7 +809,7 @@ class ThreadController extends AbstractFOSRestController
         $redirect = new RedirectResponse($response->headers->get('Location'));
         $content = $redirect->getContent();
         $response->setContent($content);
-        $response->setStatusCode(302);
+        $response->setStatusCode(Response::HTTP_SEE_OTHER);
 
         return $response;
     }
