@@ -67,6 +67,33 @@
         },
 
         /**
+         * Shorcut post method.
+         *
+         * @param string url The url of the page to post.
+         * @param object data The data to be posted.
+         * @param function success Optional callback function to use in case of succes.
+         * @param function error Optional callback function to use in case of error.
+         */
+        patch: function(url, data, success, error, complete) {
+            // Wrap the error callback to match return data between jQuery and easyXDM
+            var wrappedErrorCallback = function(response){
+                if('undefined' !== typeof error) {
+                    error(response.responseText, response.status);
+                }
+            };
+            var wrappedCompleteCallback = function(response){
+                if('undefined' !== typeof complete) {
+                    complete(response.responseText, response.status);
+                }
+            };
+            $.ajax({
+                url: url,
+                type: 'PATCH',
+                data: data,
+            }).done(success).fail(wrappedErrorCallback).always(wrappedCompleteCallback);
+        },
+
+        /**
          * Shorcut get method.
          *
          * @param string url The url of the page to get.
@@ -332,7 +359,7 @@
                             // Post it
                             var form = $($.trim(data)).children('form')[0];
 
-                            FOS_COMMENT.post(
+                            FOS_COMMENT.patch(
                                 form.action,
                                 FOS_COMMENT.serializeObject(form),
                                 function(data) {

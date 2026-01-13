@@ -177,7 +177,7 @@ class ThreadController extends AbstractFOSRestController
         $form->setData($thread);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $manager->saveThread($thread);
             $response = $this->getViewHandler()->handle($this->onOpenThreadSuccess($form));
             return $this->createRedirect($response);
