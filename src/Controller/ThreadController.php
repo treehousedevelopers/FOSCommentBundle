@@ -180,7 +180,7 @@ class ThreadController extends AbstractFOSRestController
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->saveThread($thread);
             $response = $this->getViewHandler()->handle($this->onOpenThreadSuccess($form));
-            return $this->createRedirect($response);
+            return $this->createRedirect($response, Response::HTTP_SEE_OTHER);
         }
 
         return $this->getViewHandler()->handle($this->onOpenThreadError($form));
@@ -804,12 +804,12 @@ class ThreadController extends AbstractFOSRestController
         return null;
     }
 
-    protected function createRedirect(Response $response): Response
+    protected function createRedirect(Response $response, int $status = Response::HTTP_FOUND): Response
     {
         $redirect = new RedirectResponse($response->headers->get('Location'));
         $content = $redirect->getContent();
         $response->setContent($content);
-        $response->setStatusCode(Response::HTTP_SEE_OTHER);
+        $response->setStatusCode($status);
 
         return $response;
     }
