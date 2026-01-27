@@ -8,7 +8,6 @@ No, there is no additional steps required for a basic configuration. Please chec
 * Ensure there are no javascript errors on your page
 * Check the HTTP requests. Should have the following:
  * An initial request to your page
- * A request to the jQuery library
  * A request to a javascript file. Something like /web/js/35a8e64.js
  * A request to the FOSCommentBundle's API. Something like /web/app.php/api/threads/test
 
