@@ -2,8 +2,7 @@ Step 10: Other ways of including comments in a page
 ===================================================
 
 The default implementation of FOSCommentBundle uses asynchronous javascript
-and jQuery (optionally with easyXDM for cross domain requests) to load a comment
-thread into a page.
+to load a comment thread into a page.
 
 It is possible to include the thread without using javascript to load it, but
 needs additional work inside the controller's action.
@@ -36,7 +35,7 @@ public function somethingAction(Request $request)
 Once you've included this code in your action, some code must be included in your
 template:
 
-``` jinga
+``` jinja
 {% block body %}
 {# ... #}
 <div id="fos_comment_thread" data-thread="{{ thread.id }}">
@@ -51,9 +50,17 @@ template:
 {% endblock body %}
 
 {% block javascript %}
-{# jQuery must be available in the page by this time, and make sure javascript block is after
-  <div id="fos_comment_thread"> in the DOM Tree, for example right before </body> tag
+{# Make sure javascript block is after <div id="fos_comment_thread"> in the DOM Tree,
+   for example right before </body> tag
 #}
+<script>
+    // Configure FOSCommentBundle
+    window.FosComment = window.FosComment || {};
+    window.FosComment.config = {
+        threadId: '{{ thread.id }}',
+        apiBaseUrl: '{{ path('fos_comment_get_threads') }}'
+    };
+</script>
 {% javascripts '@FOSCommentBundle/Resources/public/js/comments.js' %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}

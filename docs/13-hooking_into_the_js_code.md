@@ -67,7 +67,7 @@ Triggered when the the request about voting a comment succeeds.
 
 Triggered when the comment is inserted into the DOM tree.
 
- - commentHtml: jQuery object to insert into the DOM tree.
+ - commentHtml: HTML element object to insert into the DOM tree.
 
 
 ### fos_comment_removing_comment(  )
@@ -88,10 +88,11 @@ Example:
 =============================
 
 ```js
-$(document)
-    .on('fos_comment_show_form', '.fos_comment_comment_reply_show_form', function (event, data) {
-        // do stuffs
-    });
+FOS_COMMENT.thread_container.addEventListener('fos_comment_show_form', function (event) {
+    // Access event details
+    console.log(event.detail);
+    // do stuffs
+});
 ```
 
 ## That is it!
